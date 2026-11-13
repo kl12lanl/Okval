@@ -32,9 +32,10 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Fetch Token
-        run: |
-          sed -i "s/^token:.*/token: \"${TOKEN}\"/" config.yml
+          - name: Fetch Token
+      run: |
+        if [ -z "$TOKEN" ]; then echo "ОШИБКА: Секрет TOKEN пустой или не найден!"; exit 1; fi
+        sed -i "s/^[[:space:]]*token:.*/token: \"${TOKEN}\"/" config.yml
 
       - name: hi
         run: |
